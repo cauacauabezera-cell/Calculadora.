@@ -1,17 +1,42 @@
-let x = 10, y = 2;
+let x = 10;
+let y = 2;
+let operador = '+';
 
-// Adição
-let soma = x + y;
-console.log(`A soma de ${x} e ${y} é ${soma}`);
+// Verifica x
+if (typeof x !== 'number') {
+  console.log("Erro: x deve ser um número válido.");
+} 
+else if (isNaN(x)) {
+  console.log("Erro: x deve ser um número válido.");
+} 
 
-// Subtração
-let subtracao = x - y;
-console.log(`A subtração de ${x} e ${y} é ${subtracao}`);
+// Verifica y
+else if (typeof y !== 'number') {
+  console.log("Erro: y deve ser um número válido.");
+} 
+else if (isNaN(y)) {
+  console.log("Erro: y deve ser um número válido.");
+} 
 
-// Multiplicação
-let multiplicacao = x * y;
-console.log(`A multiplicação de ${x} e ${y} é ${multiplicacao}`);
+// Operações
+else if (operador === '+') {
+  console.log(`A soma de ${x} e ${y} é ${x + y}`);
+} 
+else if (operador === '-') {
+  console.log(`A subtração de ${x} e ${y} é ${x - y}`);
+} 
+else if (operador === '*') {
+  console.log(`A multiplicação de ${x} e ${y} é ${x * y}`);
+} 
+else if (operador === '/') {
+  if (y === 0) {
+    console.log("Erro: divisão por zero não é permitida.");
+  } else {
+    console.log(`A divisão de ${x} e ${y} é ${x / y}`);
+  }
+} 
 
-// Divisão
-let divisao = x / y;
-console.log(`A divisão de ${x} e ${y} é ${divisao}`);
+// Caso o operador não seja válido
+else {
+  console.log("Erro: operador inválido. Use +, -, * ou /.");
+}
