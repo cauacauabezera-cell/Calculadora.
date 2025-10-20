@@ -1,34 +1,47 @@
-function calcular(numero1, numero2, operador) {
-  // Verifica numero1
-  if (typeof numero1 !== 'number' || isNaN(numero1)) {
-    console.log("Erro: o primeiro número deve ser válido.");
-    return;
+// Objetos.
+const operadores = {
+  '+': (a, b) => a + b,
+  '-': (a, b) => a - b,
+  '*': (a, b) => a * b,
+  '/': (a, b) => {
+    if (b === 0) return null;
+    return a / b;
   }
+};
 
-  // Verifica numero2
-  if (typeof numero2 !== 'number' || isNaN(numero2)) {
-    console.log("Erro: o segundo número deve ser válido.");
-    return;
-  }
+const mensagens = {
+  erroNumero1: "Erro: o primeiro número deve ser válido.",
+  erroNumero2: "Erro: o segundo número deve ser válido.",
+  erroOperador: "Erro: operador inválido. Use +, -, * ou /.",
+  erroDivisaoPorZero: "Erro: divisão por zero não é permitida."
+};
 
-  // Operações
-  if (operador === '+') {
-    console.log(`A soma de ${numero1} e ${numero2} é ${numero1 + numero2}`);
-  } 
-  else if (operador === '-') {
-    console.log(`A subtração de ${numero1} e ${numero2} é ${numero1 - numero2}`);
-  } 
-  else if (operador === '*') {
-    console.log(`A multiplicação de ${numero1} e ${numero2} é ${numero1 * numero2}`);
-  } 
-  else if (operador === '/') {
-    if (numero2 === 0) {
-      console.log("Erro: divisão por zero não é permitida.");
-    } else {
-      console.log(`A divisão de ${numero1} e ${numero2} é ${numero1 / numero2}`);
-    }
-  } 
-  else {
-    console.log("Erro: operador inválido. Use +, -, * ou /.");
+// Objeto com os números do usuário.
+const numeros = {
+  primeiro: 10,
+  segundo: 2
+};
+
+// Operador escolhido pelo usuário.
+let operadorEscolhido = '+';
+
+// Validação dos números / operador.
+if (isNaN(numeros.primeiro)) {
+  console.log(mensagens.erroNumero1);
+
+} else if (isNaN(numeros.segundo)) {
+  console.log(mensagens.erroNumero2);
+
+} else if (!operadores[operadorEscolhido]) {
+  console.log(mensagens.erroOperador);
+  
+} else {
+  // Calcula o resultado.
+  const resultado = operadores[operadorEscolhido](numeros.primeiro, numeros.segundo);
+
+  if (resultado === null) {
+    console.log(mensagens.erroDivisaoPorZero);
+  } else {
+    console.log(`O resultado de ${numeros.primeiro} ${operadorEscolhido} ${numeros.segundo} é ${resultado}`);
   }
 }
