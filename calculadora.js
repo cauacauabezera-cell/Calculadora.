@@ -1,47 +1,42 @@
-// Objetos.
-const operadores = {
-  '+': (a, b) => a + b,
-  '-': (a, b) => a - b,
-  '*': (a, b) => a * b,
-  '/': (a, b) => {
-    if (b === 0) return null;
-    return a / b;
+const soma = (a, b) => a + b;
+const subtracao = (a, b) => a - b;
+const divisao = (a, b) => a / b;
+const multiplicacao = (a, b) => a * b;
+
+const validador = ({ primeiro, segundo, operacao }) => {
+  const operadoresValidos = ["+", "-", "*", "/"];
+
+  if (isNaN(primeiro) || isNaN(segundo)) {
+    console.log("Valores precisam ser numéricos");
+    return false;
+  }
+
+  if (!operadoresValidos.includes(operacao)) {
+    console.log("Operador inválido");
+    return false;
+  }
+
+  if (operacao === "/" && segundo === 0) {
+    console.log("Não pode divisão por zero");
+    return false;
+  }
+
+  return true;
+};
+
+const calculadora = ({ primeiro, segundo, operacao }) => {
+  if (!validador({ primeiro, segundo, operacao })) return;
+
+  switch (operacao) {
+    case "+": return soma(primeiro, segundo);
+    case "-": return subtracao(primeiro, segundo);
+    case "*": return multiplicacao(primeiro, segundo);
+    case "/": return divisao(primeiro, segundo);
   }
 };
 
-const mensagens = {
-  erroNumero1: "Erro: o primeiro número deve ser válido.",
-  erroNumero2: "Erro: o segundo número deve ser válido.",
-  erroOperador: "Erro: operador inválido. Use +, -, * ou /.",
-  erroDivisaoPorZero: "Erro: divisão por zero não é permitida."
-};
+const resultado1 = calculadora({ primeiro: 5, segundo: 10, operacao: "7" });
+if (resultado1 !== undefined) console.log(resultado1);
 
-// Objeto com os números do usuário.
-const numeros = {
-  primeiro: 10,
-  segundo: 2
-};
-
-// Operador escolhido pelo usuário.
-let operadorEscolhido = '+';
-
-// Validação dos números / operador.
-if (isNaN(numeros.primeiro)) {
-  console.log(mensagens.erroNumero1);
-
-} else if (isNaN(numeros.segundo)) {
-  console.log(mensagens.erroNumero2);
-
-} else if (!operadores[operadorEscolhido]) {
-  console.log(mensagens.erroOperador);
-  
-} else {
-  // Calcula o resultado.
-  const resultado = operadores[operadorEscolhido](numeros.primeiro, numeros.segundo);
-
-  if (resultado === null) {
-    console.log(mensagens.erroDivisaoPorZero);
-  } else {
-    console.log(`O resultado de ${numeros.primeiro} ${operadorEscolhido} ${numeros.segundo} é ${resultado}`);
-  }
-}
+const resultado2 = calculadora({ primeiro: 3, segundo: 5, operacao: "+" });
+if (resultado2 !== undefined) console.log(resultado2);
