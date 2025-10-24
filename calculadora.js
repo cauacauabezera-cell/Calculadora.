@@ -7,25 +7,23 @@ const validador = ({ primeiro, segundo, operacao }) => {
   const operadoresValidos = ["+", "-", "*", "/"];
 
   if (isNaN(primeiro) || isNaN(segundo)) {
-    console.log("Valores precisam ser numéricos");
-    return false;
+    return "Valores precisam ser numéricos";
   }
 
   if (!operadoresValidos.includes(operacao)) {
-    console.log("Operador inválido");
-    return false;
+    return "Operador inválido";
   }
 
   if (operacao === "/" && segundo === 0) {
-    console.log("Não pode divisão por zero");
-    return false;
+    return "Não pode divisão por zero";
   }
 
   return true;
 };
 
 const calculadora = ({ primeiro, segundo, operacao }) => {
-  if (!validador({ primeiro, segundo, operacao })) return;
+  const estaValidado = validador({ primeiro, segundo, operacao });
+  if (estaValidado !== true) return estaValidado;
 
   switch (operacao) {
     case "+": return soma(primeiro, segundo);
@@ -35,8 +33,6 @@ const calculadora = ({ primeiro, segundo, operacao }) => {
   }
 };
 
-const resultado1 = calculadora({ primeiro: 5, segundo: 10, operacao: "7" });
-if (resultado1 !== undefined) console.log(resultado1);
+console.log(calculadora({ primeiro: 4, segundo: 6, operacao:"o"}));
 
-const resultado2 = calculadora({ primeiro: 3, segundo: 5, operacao: "+" });
-if (resultado2 !== undefined) console.log(resultado2);
+console.log(calculadora({ primeiro: 7, segundo: 3, operacao:"+"}));
