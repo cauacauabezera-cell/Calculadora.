@@ -1,38 +1,57 @@
-const soma = (a, b) => a + b;
-const subtracao = (a, b) => a - b;
-const divisao = (a, b) => a / b;
-const multiplicacao = (a, b) => a * b;
+const readline = require('readline');
 
-const validador = ({ primeiro, segundo, operacao }) => {
-  const operadoresValidos = ["+", "-", "*", "/"];
+// Avaliação fórmula
+const avaliarFormula = (formula) => {
+  try {
+    const clean = formula.replace(/\s+/g, '');
+    if (!/^[0-9+\-*/().]+$/.test(clean))
+      return "Fórmula inválida. Use apenas números e operadores (+, -, *, /)";
+    if (/\/\s*0(?!\d)/g.test(clean))
+      return "Não pode divisão por zero";
 
-  if (isNaN(primeiro) || isNaN(segundo)) {
-    return "Valores precisam ser numéricos";
-  }
-
-  if (!operadoresValidos.includes(operacao)) {
-    return "Operador inválido";
-  }
-
-  if (operacao === "/" && segundo === 0) {
-    return "Não pode divisão por zero";
-  }
-
-  return true;
-};
-
-const calculadora = ({ primeiro, segundo, operacao }) => {
-  const estaValidado = validador({ primeiro, segundo, operacao });
-  if (estaValidado !== true) return estaValidado;
-
-  switch (operacao) {
-    case "+": return soma(primeiro, segundo);
-    case "-": return subtracao(primeiro, segundo);
-    case "*": return multiplicacao(primeiro, segundo);
-    case "/": return divisao(primeiro, segundo);
+    const resultado = Function('"use strict"; return (' + clean + ')')();
+    return isFinite(resultado) ? resultado : "Resultado inválido";
+  } catch {
+    return "Erro ao processar a fórmula. Verifique a sintaxe.";
   }
 };
 
-console.log(calculadora({ primeiro: 4, segundo: 6, operacao:"o"}));
+// readline
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
-console.log(calculadora({ primeiro: 7, segundo: 3, operacao:"+"}));
+// introdução
+console.log(`=== CALCULADORA ===
+Digite uma fórmula matemática (ex: 5 + 3 * 2 - 8 / 4)
+Use +, -, *, / para operações
+Digite 'sair' ou 'exit' para encerrar
+`);
+
+// Processa entrada do usuário
+const processarEntrada = () => {
+  rl.question('Digite a fórmula: ', (input) => {
+    const trimmed = input.trim().toLowerCase();
+
+    if (["sair", "exit"].includes(trimmed)) {
+      console.log("Encerrando calculadora. Até logo!");
+      rl.close();
+      return;
+    }
+
+    if (!trimmed) {
+      console.log("Por favor, digite uma fórmula válida.\n");
+    } else {
+      const resultado = avaliarFormula(input);
+      console.log(typeof resultado === 'number'
+        ? `Resultado: ${resultado}\n`
+        : `Erro: ${resultado}\n`);
+    }
+
+    processarEntrada();
+  });
+};
+
+
+processarEntrada();
