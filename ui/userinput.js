@@ -8,7 +8,7 @@ const rl = readline.createInterface({
 
 console.log(`=== CALCULADORA ===
 Digite uma fórmula matemática (ex: 5 + (3 * (2 + 1)) - 4 / 2)
-Use +, -, *, / e parênteses ()
+Use +, -, *, /, ^ (exponenciação) e parênteses ()
 Digite 'sair' ou 'exit' para encerrar
 `);
 
